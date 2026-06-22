@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<!--
+=============================================================================
+  BRADKEN® DEVICE COMPLIANCE PAGE — TEMPLATE
+=============================================================================
+  Copy this file to:  devices/[model-folder]/index.html
+  Then replace every value marked with a  EDIT X:  comment below.
+
+  FIELDS TO UPDATE
+  ──────────────────────────────────────────────────────────────────
+  EDIT 1   <title>             Browser tab title
+  EDIT 2   HEADER BAR          Regulatory body name
+  EDIT 3   PRODUCT NAME        Spanish + English product name
+  EDIT 4   MODEL GATEWAY       Gateway hardware model string
+  EDIT 5   MODEL END NODE      End node hardware model string
+  EDIT 6   DEVICE TYPE         Short device category (bilingual)
+  EDIT 7   FREQ BAND           Operating frequency band (MHz)
+  EDIT 8   CHANNELS            Active channel range and spacing
+  EDIT 9   CHANNEL MODE        Channel access method
+  EDIT 10  PROTOCOL            Wireless protocol
+  EDIT 11  PHY                 Physical layer / modulation
+  EDIT 12  TX POWER            Transmit power (dBm / mW)
+  EDIT 13  EIRP                Equivalent isotropically radiated power (dBm)
+  EDIT 14  ANTENNA GAIN        Antenna gain (dBi) and model
+  EDIT 15  POLARIZATION        Antenna polarization type
+  EDIT 16  EMISSION DESIG      ITU emission designator
+  EDIT 17  BIT RATE            Data rate (kbps / Mbps)
+  EDIT 18  DUPLEX              Half-duplex or Full-duplex
+  EDIT 19  DUTY CYCLE          Transmission duty cycle description
+  EDIT 20  COMM TYPE           Communication use-case description
+  EDIT 21  FOOTER DATE         Last updated date (DD/MM/YYYY)
+  EDIT 22  FOOTER VERSION      Document version string (e.g. v1.0)
+
+  FIXED FIELDS — do not change
+  ──────────────────────────────────────────────────────────────────
+  Manufacturer name, ABN, address     Bradken® Pty Limited
+  Technical contact email             digitalsupport@bradken.com
+  Chilean importer name and RUT       BRADKEN CHILE LTDA. / 76.980.920-1
+  Declaration of Conformance text
+  All CSS and Bradken® brand tokens
+  Bradken® logo (embedded as base64 — no external dependencies)
+=============================================================================
+-->
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- EDIT 1: Update to reflect the specific product name -->
+  <title>[PRODUCT NAME] — Certificación Bradken®</title>
+  <style>
+    :root {
+      --bk-blue:        #005596;
+      --bk-blue-dark:   #00305F;
+      --bk-grey:        #939598;
+      --bk-grey-dark:   #414042;
+      --bk-grey-mid:    #6D6E71;
+      --bk-grey-light:  #BCBEC0;
+      --bk-orange:      #F47B29;
+      --bk-blue-light:  #71A0CB;
+      --bk-blue-pale:   #BAD2ED;
+      --white:          #FFFFFF;
+      --page-bg:        #F5F5F5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--page-bg);
+      color: var(--bk-grey-dark);
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--bk-blue-dark) 0%, var(--bk-blue) 60%, var(--bk-blue-light) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: -20px; right: -30px;
+      width: 220px; height: 160px;
+      background: rgba(255,255,255,0.06);
+      transform: skewX(-18deg);
+      pointer-events: none;
+    }
+
+    header::after {
+      content: '';
+      position: absolute;
+      top: 10px; right: 40px;
+      width: 120px; height: 160px;
+      background: rgba(255,255,255,0.04);
+      transform: skewX(-18deg);
+      pointer-events: none;
+    }
+
+    .header-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 24px 24px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-logo { margin-bottom: 16px; }
+    .header-logo img { height: 34px; width: auto; filter: brightness(0) invert(1); }
+
+    .header-title {
+      font-size: clamp(17px, 3.5vw, 22px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+
+    .header-subtitle {
+      font-size: 13px;
+      color: rgba(255,255,255,0.72);
+      font-style: italic;
+    }
+
+    .header-bar {
+      background: rgba(0,0,0,0.25);
+      padding: 7px 24px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.65);
+      font-style: italic;
+      text-align: right;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 24px 24px 56px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--bk-grey-light);
+    }
+
+    .card-header {
+      background: var(--bk-blue);
+      padding: 9px 18px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .card-header-es {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .card-header-en {
+      font-size: 11px;
+      color: rgba(255,255,255,0.65);
+      font-style: italic;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .data-table tr { border-bottom: 1px solid var(--bk-grey-light); }
+    .data-table tr:last-child { border-bottom: none; }
+
+    .data-table td {
+      padding: 11px 18px;
+      vertical-align: top;
+    }
+
+    .data-table td:first-child {
+      width: 44%;
+      border-right: 1px solid var(--bk-grey-light);
+      background: #FAFAFA;
+    }
+
+    .label-es {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--bk-blue);
+    }
+
+    .label-en {
+      font-size: 11px;
+      color: var(--bk-grey);
+      font-style: italic;
+    }
+
+    .value { font-size: 13px; color: var(--bk-grey-dark); }
+    .value.highlight { color: var(--bk-blue); font-weight: 700; }
+
+    .rf-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--bk-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 7px 18px 4px;
+      background: #FAFAFA;
+      border-bottom: 1px solid var(--bk-grey-light);
+    }
+
+    .freq-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .freq-table thead { background: var(--bk-blue-dark); }
+
+    .freq-table th {
+      padding: 8px 18px;
+      text-align: left;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .freq-table td {
+      padding: 10px 18px;
+      border-bottom: 1px solid var(--bk-grey-light);
+      color: var(--bk-grey-dark);
+      vertical-align: top;
+    }
+
+    .freq-table tr:nth-child(even) td { background: #F8F9FA; }
+    .freq-table tr:last-child td { border-bottom: none; }
+    .freq-table td:last-child { color: var(--bk-blue); font-weight: 700; }
+
+    .param-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .param-table tr { border-bottom: 1px solid var(--bk-grey-light); }
+    .param-table tr:last-child { border-bottom: none; }
+
+    .param-table td {
+      padding: 9px 18px;
+      vertical-align: top;
+    }
+
+    .param-table td:first-child {
+      width: 44%;
+      border-right: 1px solid var(--bk-grey-light);
+      background: #FAFAFA;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--bk-blue);
+    }
+
+    .param-table td:first-child .en {
+      display: block;
+      font-size: 10px;
+      font-weight: normal;
+      color: var(--bk-grey);
+      font-style: italic;
+    }
+
+    .param-table td:last-child {
+      font-size: 12px;
+      color: var(--bk-grey-dark);
+    }
+
+    .declaration {
+      border: 1px solid var(--bk-grey-light);
+      border-left: 4px solid var(--bk-blue);
+      padding: 18px 20px;
+      background: var(--white);
+    }
+
+    .declaration-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--bk-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+
+    .declaration p {
+      font-size: 12px;
+      color: var(--bk-grey-dark);
+      line-height: 1.65;
+    }
+
+    .declaration p + p {
+      margin-top: 8px;
+      color: var(--bk-grey-mid);
+      font-style: italic;
+    }
+
+    footer { background: var(--bk-blue); padding: 0; }
+
+    .footer-bar {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .footer-tagline {
+      font-size: 11px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.85);
+      font-style: italic;
+    }
+
+    .footer-meta {
+      font-size: 10px;
+      color: rgba(255,255,255,0.5);
+      text-align: right;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 520px) {
+      .data-table td, .param-table td { padding: 10px 14px; }
+      .data-table td:first-child { width: 46%; }
+      .card-header { padding: 8px 14px; }
+      .freq-table th, .freq-table td { padding: 8px 14px; }
+      .footer-bar { padding: 12px 14px; flex-direction: column; align-items: flex-start; }
+      .footer-meta { text-align: left; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-logo">
+        <img src="data:image/png;base64,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" alt="Bradken®" />
+      </div>
+      <h1 class="header-title">Información de Certificación de Equipos</h1>
+      <p class="header-subtitle">Device Certification Information</p>
+    </div>
+    <!--
+      EDIT 2: Replace with the relevant regulatory body name. Examples:
+        SUBTEL — Subsecretaría de Telecomunicaciones · República de Chile
+        ISED — Innovation, Science and Economic Development Canada
+        FCC — Federal Communications Commission · United States
+    -->
+    <div class="header-bar">[REGULATORY BODY NAME]</div>
+  </header>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 1 — MANUFACTURER INFORMATION
+         Fixed. Do not edit unless Bradken corporate details change.
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-es">Información del Fabricante</span>
+        <span class="card-header-en">Manufacturer Information</span>
+      </div>
+      <table class="data-table">
+        <tr>
+          <td><span class="label-es">Fabricante</span><span class="label-en">Manufacturer</span></td>
+          <td><span class="value">Bradken® Pty Limited &nbsp;ABN 33 108 693 009</span></td>
+        </tr>
+        <tr>
+          <td><span class="label-es">País de Origen</span><span class="label-en">Country of Origin</span></td>
+          <td><span class="value">Australia</span></td>
+        </tr>
+        <tr>
+          <td><span class="label-es">Dirección del Fabricante</span><span class="label-en">Manufacturer Address</span></td>
+          <td><span class="value">20 McIntosh Drive, Mayfield West NSW 2304, Australia</span></td>
+        </tr>
+        <tr>
+          <td><span class="label-es">Contacto Técnico</span><span class="label-en">Technical Contact</span></td>
+          <td><span class="value">digitalsupport@bradken.com</span></td>
+        </tr>
+        <tr>
+          <td><span class="label-es">Importador en Chile</span><span class="label-en">Chilean Importer</span></td>
+          <td><span class="value">BRADKEN CHILE LTDA.<br>RUT: 76.980.920-1</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 2 — DEVICE IDENTIFICATION
+         Edit fields 3 – 6.
+         Remove the Gateway or End Node row if not applicable.
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-es">Identificación del Equipo</span>
+        <span class="card-header-en">Device Identification</span>
+      </div>
+      <table class="data-table">
+        <tr>
+          <td><span class="label-es">Nombre del Producto</span><span class="label-en">Product Name</span></td>
+          <!-- EDIT 3: Spanish name first, English below in smaller grey text -->
+          <td><span class="value">[NOMBRE DEL PRODUCTO EN ESPAÑOL]<br>
+            <span style="font-size:12px;color:var(--bk-grey-mid);">[Product Name in English]</span></span></td>
+        </tr>
+        <tr>
+          <!-- EDIT 4: Gateway hardware model string, e.g. "Gateway Rev1.0"
+               Delete this entire <tr> block if the product has no gateway. -->
+          <td><span class="label-es">Modelo — Gateway</span><span class="label-en">Model — Gateway</span></td>
+          <td><span class="value highlight">[GATEWAY MODEL]</span></td>
+        </tr>
+        <tr>
+          <!-- EDIT 5: End node hardware model string, e.g. "Head_Unit Rev1.1"
+               Delete this entire <tr> block if the product is a single unit. -->
+          <td><span class="label-es">Modelo — Nodo Final</span><span class="label-en">Model — End Node</span></td>
+          <td><span class="value highlight">[END NODE MODEL]</span></td>
+        </tr>
+        <tr>
+          <td><span class="label-es">Tipo de Dispositivo</span><span class="label-en">Device Type</span></td>
+          <!-- EDIT 6: e.g. "Dispositivo IoT Inalámbrico Industrial / Industrial Wireless IoT Device" -->
+          <td><span class="value">[TIPO DE DISPOSITIVO / Device Type]</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SECTION 3 — RF CHARACTERISTICS
+         Edit fields 7 – 20.
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-es">Características Radioeléctricas</span>
+        <span class="card-header-en">RF Characteristics</span>
+      </div>
+
+      <!-- ── Frequency & Channel ─────────────────────────────── -->
+      <div class="rf-section-label">Frecuencias y Canal &nbsp;/&nbsp; Frequency &amp; Channel</div>
+      <table class="freq-table">
+        <thead>
+          <tr>
+            <th>Parámetro / Parameter</th>
+            <th>Valor / Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Banda de Frecuencia / Frequency Band</td>
+            <!-- EDIT 7: e.g. "902 – 927 MHz (Sub-1 GHz ISM)"
+                               "2400 – 2483.5 MHz (2.4 GHz ISM)"
+                               "5150 – 5850 MHz (5 GHz ISM)" -->
+            <td>[XXX – XXX MHz (Band name)]</td>
+          </tr>
+          <tr>
+            <td>Canales Activos (FHSS) / Active Channels (FHSS)</td>
+            <!-- EDIT 8: e.g. "Canales 64–128  (915.0 – 927.8 MHz, paso 200 kHz / 200 kHz step)"
+                 If not using FHSS, update this row label to "Canal / Channel" -->
+            <td>[Channel numbers and MHz range]</td>
+          </tr>
+          <tr>
+            <td>Modo de Acceso al Canal / Channel Access Mode</td>
+            <!-- EDIT 9: e.g. Spanish: "Espectro ensanchado por salto de frecuencia (FHSS)"
+                               English: "Frequency Hopping Spread Spectrum (FHSS)"
+                         Other options: DSSS / LBT (Listen Before Talk) / Single fixed channel -->
+            <td>[Spanish channel mode]<br>
+              <span style="color:var(--bk-grey-mid);font-size:11px;">[English channel mode]</span></td>
+          </tr>
+          <tr>
+            <td>Protocolo / Protocol</td>
+            <!-- EDIT 10: e.g. "IEEE 802.15.4 — TI 15.4 Stack, modo FHSS / FHSS mode"
+                               "LoRaWAN 1.0.4"
+                               "IEEE 802.11 b/g/n (Wi-Fi)" -->
+            <td>[Spanish protocol]<br>
+              <span style="color:var(--bk-grey-mid);font-size:11px;">[English protocol]</span></td>
+          </tr>
+          <tr>
+            <td>PHY / Modulación</td>
+            <!-- EDIT 11: e.g. "5 kbps SimpleLink Long Range (SLR)"
+                               "SF7–SF12, BW 125/250/500 kHz (LoRa)"
+                               "OFDM, canal 20 MHz / 20 MHz channel (802.11n)" -->
+            <td>[Spanish PHY / modulation]<br>
+              <span style="color:var(--bk-grey-mid);font-size:11px;">[English PHY / modulation]</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ── Power & Antenna ────────────────────────────────── -->
+      <div class="rf-section-label">Potencia y Antena &nbsp;/&nbsp; Power &amp; Antenna</div>
+      <table class="param-table">
+        <tr>
+          <td>Potencia de Transmisión<span class="en">Transmit Power</span></td>
+          <!-- EDIT 12: e.g. "+13 dBm (~20 mW) — nodo final / end node"
+               Add a second line for gateway TX power if different. -->
+          <td>[+XX dBm (~XX mW)]</td>
+        </tr>
+        <tr>
+          <td>EIRP<span class="en">EIRP</span></td>
+          <!-- EDIT 13: e.g. "6 dBm" -->
+          <td>[XX dBm]</td>
+        </tr>
+        <tr>
+          <td>Ganancia de Antena<span class="en">Antenna Gain</span></td>
+          <!-- EDIT 14: e.g. "1.5 dBi (pico / peak) — TE ANT-915-CPA" -->
+          <td>[X.X dBi (pico / peak) — Antenna model]</td>
+        </tr>
+        <tr>
+          <td>Polarización<span class="en">Polarization</span></td>
+          <!-- EDIT 15: e.g. "Circular derecha (RHCP) / Right-Hand Circular (RHCP)"
+                             "Lineal vertical / Linear vertical" -->
+          <td>[Spanish polarization] / [English polarization]</td>
+        </tr>
+      </table>
+
+      <!-- ── Emission Parameters ───────────────────────────── -->
+      <div class="rf-section-label">Parámetros de Emisión &nbsp;/&nbsp; Emission Parameters</div>
+      <table class="param-table">
+        <tr>
+          <td>Designación de Emisión<span class="en">Emission Designation</span></td>
+          <!-- EDIT 16: ITU emission designator string, e.g. "32K0F1D", "200KF8E", "20M0G7D"
+               Format: [bandwidth][modulation type][nature of signal][information type] -->
+          <td><strong style="color:var(--bk-blue);">[EMISSION DESIGNATOR]</strong></td>
+        </tr>
+        <tr>
+          <td>Tasa de Bits<span class="en">Bit Rate</span></td>
+          <!-- EDIT 17: e.g. "5 kbps"  /  "250 kbps"  /  "54 Mbps" -->
+          <td>[XX kbps]</td>
+        </tr>
+        <tr>
+          <td>Tipo de Dúplex<span class="en">Duplex Type</span></td>
+          <!-- EDIT 18: "Half-duplex"  /  "Full-duplex"  /  "Simplex (TX only)" -->
+          <td>[Half-duplex / Full-duplex]</td>
+        </tr>
+        <tr>
+          <td>Ciclo de Trabajo<span class="en">Duty Cycle</span></td>
+          <!-- EDIT 19: Describe transmission behaviour in both languages.
+               e.g. Spanish: "Bajo — medición y transmisión cada 4 horas por nodo"
+                    English: "Low — measurement & transmission every 4 hours per node" -->
+          <td>[Spanish duty cycle description]<br>
+            <span style="color:var(--bk-grey-mid);font-size:11px;">[English duty cycle description]</span></td>
+        </tr>
+        <tr>
+          <td>Tipo de Comunicación<span class="en">Communication Type</span></td>
+          <!-- EDIT 20: Short use-case description in both languages.
+               e.g. Spanish: "Monitoreo industrial periódico de baja potencia"
+                    English: "Periodic low-power industrial monitoring" -->
+          <td>[Spanish communication type]<br>
+            <span style="color:var(--bk-grey-mid);font-size:11px;">[English communication type]</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         DECLARATION OF CONFORMANCE
+         Fixed text. Do not edit.
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="declaration">
+      <div class="declaration-title">Declaración de Conformidad / Declaration of Conformance</div>
+      <p>Este documento actúa como Declaración de Conformidad. El fabricante, Bradken® Pty Limited, declara que el equipo descrito en este documento cumple con los requisitos técnicos y reglamentarios aplicables para su comercialización y uso en Chile, conforme a la normativa vigente de la Subsecretaría de Telecomunicaciones (SUBTEL).</p>
+      <p>This document acts as a Declaration of Conformance. The manufacturer, Bradken® Pty Limited, declares that the equipment described herein complies with the applicable technical and regulatory requirements for its sale and use in Chile, in accordance with current regulations of the Subsecretaría de Telecomunicaciones (SUBTEL).</p>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-bar">
+      <span class="footer-tagline">Our Innovation. Your Advantage.</span>
+      <div class="footer-meta">
+        Bradken® Pty Limited &nbsp;|&nbsp; ABN 33 108 693 009 &nbsp;|&nbsp;
+        <!-- EDIT 21 & 22: Date format DD/MM/YYYY and version string e.g. v1.0 -->
+        Última actualización / Last updated: [DD/MM/YYYY] &nbsp;|&nbsp; [vX.X]
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
