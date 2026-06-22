@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificación SUBTEL / SUBTEL Certification</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Token system ───────────────────────────────────────────── */
+    :root {
+      --bg:          #F2F4F3;
+      --surface:     #FFFFFF;
+      --border:      #D5DAD8;
+      --ink:         #1A2421;
+      --ink-muted:   #5C706A;
+      --accent:      #005F4B;      /* deep Chilean forest green */
+      --accent-lite: #E0EDE9;
+      --flag-red:    #C0392B;      /* Chile flag red */
+      --mono:        'IBM Plex Mono', monospace;
+      --sans:        'IBM Plex Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ── Header stripe ──────────────────────────────────────────── */
+    header {
+      background: var(--accent);
+      color: #fff;
+      padding: 0 24px;
+    }
+
+    .header-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 28px 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .header-flag {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .flag-stripe {
+      height: 4px;
+      border-radius: 2px;
+    }
+    .flag-stripe.red   { background: var(--flag-red); width: 22px; }
+    .flag-stripe.white { background: rgba(255,255,255,0.7); width: 22px; }
+    .flag-stripe.blue  { background: #003087; width: 22px; }
+
+    .header-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
+    .header-title {
+      font-size: clamp(18px, 4vw, 26px);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+    }
+
+    .header-subtitle {
+      font-size: 13px;
+      font-weight: 300;
+      opacity: 0.75;
+      font-style: italic;
+    }
+
+    /* ── Cert badge ─────────────────────────────────────────────── */
+    .cert-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 4px;
+      padding: 7px 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .cert-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #4dffb4;
+      flex-shrink: 0;
+    }
+
+    /* ── Main layout ────────────────────────────────────────────── */
+    main {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 32px 24px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* ── Section card ───────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: var(--accent-lite);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 20px;
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+    }
+
+    .card-header-es {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.01em;
+    }
+
+    .card-header-en {
+      font-size: 11px;
+      color: var(--ink-muted);
+      font-style: italic;
+    }
+
+    /* ── Data rows ──────────────────────────────────────────────── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .data-table tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .data-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .data-table td {
+      padding: 13px 20px;
+      vertical-align: top;
+    }
+
+    .data-table td:first-child {
+      width: 42%;
+      border-right: 1px solid var(--border);
+    }
+
+    .label-es {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      display: block;
+    }
+
+    .label-en {
+      font-size: 11px;
+      color: var(--ink-muted);
+      font-style: italic;
+    }
+
+    .value {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink);
+      word-break: break-word;
+    }
+
+    .value.highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ── Frequency table ────────────────────────────────────────── */
+    .freq-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+
+    .freq-table thead tr {
+      background: var(--bg);
+    }
+
+    .freq-table th {
+      padding: 8px 20px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .freq-table td {
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--border);
+      color: var(--ink);
+    }
+
+    .freq-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .freq-table td:last-child {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ── Standards pills ────────────────────────────────────────── */
+    .pill-group {
+      padding: 16px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .pill {
+      font-family: var(--mono);
+      font-size: 11px;
+      background: var(--accent-lite);
+      color: var(--accent);
+      border: 1px solid #b3d1c9;
+      border-radius: 3px;
+      padding: 4px 10px;
+      font-weight: 600;
+    }
+
+    /* ── Warning box ────────────────────────────────────────────── */
+    .warning-box {
+      border-left: 3px solid var(--flag-red);
+      padding: 14px 20px;
+      background: #fdf3f2;
+    }
+
+    .warning-box p {
+      font-size: 12.5px;
+      color: #7a2020;
+      line-height: 1.55;
+    }
+
+    .warning-box p + p {
+      margin-top: 6px;
+      color: var(--ink-muted);
+      font-style: italic;
+    }
+
+    /* ── Footer ─────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 20px 24px;
+      text-align: center;
+    }
+
+    .footer-inner {
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: 11px;
+      color: var(--ink-muted);
+      font-family: var(--mono);
+      line-height: 1.7;
+    }
+
+    /* ── Responsive ─────────────────────────────────────────────── */
+    @media (max-width: 520px) {
+      .data-table td:first-child { width: 48%; }
+      .data-table td { padding: 11px 14px; }
+      .card-header   { padding: 9px 14px; }
+      .pill-group    { padding: 12px 14px; }
+      .freq-table th,
+      .freq-table td { padding: 9px 14px; }
+      .warning-box   { padding: 12px 14px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="header-flag">
+        <div class="flag-stripe blue"></div>
+        <div class="flag-stripe red"></div>
+        <div class="flag-stripe white"></div>
+      </div>
+      <span class="header-label">SUBTEL — Subsecretaría de Telecomunicaciones · Chile</span>
+      <h1 class="header-title">Información de Certificación de Equipos<br>
+        <span class="header-subtitle">Device Certification Information</span>
+      </h1>
+      <div class="cert-badge">
+        <span class="cert-dot"></span>
+        N° Certificado / Certificate No.: <strong>SUBTEL-XXXX-XXXX</strong>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── 1. Fabricante / Manufacturer ── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-es">Información del Fabricante</span>
+        <span class="card-header-en">Manufacturer Information</span>
+      </div>
+      <table class="data-table">
+        <tr>
+          <td>
+            <span class="label-es">Fabricante</span>
+            <span class="label-en">Manufacturer</span>
+          </td>
+          <td><span class="value">Nombre de la Empresa S.A.</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-es">País de Origen</span>
+            <span class="label-en">Country of Origin</span>
+          </td>
+          <td><span class="value">Chile</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-es">Dirección del Fabricante</span>
+            <span class="label-en">Manufacturer Address</span>
+          </td>
+          <td><span class="value">Av. Ejemplo 1234, Piso 5<br>Santiago, Región Metropolitana, Chile</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-es">Contacto Técnico</span>
+            <span class="label-en">Technical Contact</span>
+          </td>
+          <td><span class="value">contacto@empresa.cl</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ── 2. Identificación del Equipo / Device Identification ── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-es">Identificación del Equipo</span>
+        <span class="card-header-en">Device Identification</span>
+      </div>
+      <table class="data-table">
+        <tr>
+          <td>
+            <span class="label-es">Nombre del Producto</span>
+            <span class="label-en">Product Name</span>
+          </td>
+          <td><span class="value">Nombre del Producto IoT</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-es">Modelo</span>
+            <span class="label-en">Model</span>
+          </td>
+          <td><span class="value highlight">MODEL-XYZ-v2</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-es">Número de Serie / Lote</span>
+            <span class="label-en">Serial / Batch Number</span>
+          </td>
+          <td><span class="value">SN-000000 / BATCH-0000</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-es">Tipo de Dispositivo</span>
+            <span class="label-en">Device Type</span>
+          </td>
+          <td><span class="value">Dispositivo IoT Inalámbrico / Wireless IoT Device</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ── 3. Certificación RF / RF Certification ── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-es">Certificación Radioeléctrica</span>
+        <span class="card-header-en">RF Certification</span>
+      </div>
+      <table class="data-table">
+        <tr>
+          <td>
+            <span class="label-es">Número de Certificado SUBTEL</span>
+            <span class="label-en">SUBTEL Certificate Number</span>
+          </td>
+          <td><span class="value highlight">SUBTEL-XXXX-XXXX</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-es">Fecha de Certificación</span>
+            <span class="label-en">Certification Date</span>
+          </td>
+          <td><span class="value">DD/MM/AAAA</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-es">Fecha de Vencimiento</span>
+            <span class="label-en">Expiry Date</span>
+          </td>
+          <td><span class="value">DD/MM/AAAA</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-es">Laboratorio de Pruebas</span>
+            <span class="label-en">Testing Laboratory</span>
+          </td>
+          <td><span class="value">Nombre del Laboratorio Acreditado</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ── 4. Características RF / RF Characteristics ── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-es">Características Radioeléctricas</span>
+        <span class="card-header-en">RF Characteristics</span>
+      </div>
+      <table class="freq-table">
+        <thead>
+          <tr>
+            <th>Tecnología / Technology</th>
+            <th>Banda / Band</th>
+            <th>Frecuencia / Frequency</th>
+            <th>Pot. Máx. / Max Power</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Wi-Fi 802.11 b/g/n</td>
+            <td>2.4 GHz</td>
+            <td>2400 – 2483.5 MHz</td>
+            <td>20 dBm</td>
+          </tr>
+          <tr>
+            <td>Wi-Fi 802.11 a/n/ac</td>
+            <td>5 GHz</td>
+            <td>5150 – 5850 MHz</td>
+            <td>23 dBm</td>
+          </tr>
+          <tr>
+            <td>Bluetooth 5.0</td>
+            <td>2.4 GHz</td>
+            <td>2402 – 2480 MHz</td>
+            <td>10 dBm</td>
+          </tr>
+          <!-- Add or remove rows as needed -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── 5. Estándares / Standards ── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-es">Estándares de Cumplimiento</span>
+        <span class="card-header-en">Compliance Standards</span>
+      </div>
+      <div class="pill-group">
+        <span class="pill">IEEE 802.11 b/g/n/ac</span>
+        <span class="pill">Bluetooth 5.0</span>
+        <span class="pill">EN 300 328</span>
+        <span class="pill">EN 301 893</span>
+        <span class="pill">IEC 62368-1</span>
+        <span class="pill">FCC Part 15</span>
+        <span class="pill">RES. SUBTEL EX. N° XXX</span>
+        <!-- Add further standards as required -->
+      </div>
+    </div>
+
+    <!-- ── 6. Condiciones de Uso / Usage Conditions ── -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-header-es">Condiciones de Uso</span>
+        <span class="card-header-en">Usage Conditions</span>
+      </div>
+      <table class="data-table">
+        <tr>
+          <td>
+            <span class="label-es">País de Operación Autorizado</span>
+            <span class="label-en">Authorized Country of Operation</span>
+          </td>
+          <td><span class="value">Chile</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-es">Entorno de Uso</span>
+            <span class="label-en">Operating Environment</span>
+          </td>
+          <td><span class="value">Interior / Interior (Indoor)</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-es">Temperatura de Operación</span>
+            <span class="label-en">Operating Temperature</span>
+          </td>
+          <td><span class="value">0 °C a 40 °C / 0 °C to 40 °C</span></td>
+        </tr>
+        <tr>
+          <td>
+            <span class="label-es">Voltaje de Alimentación</span>
+            <span class="label-en">Supply Voltage</span>
+          </td>
+          <td><span class="value">5 V DC, 1 A</span></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- ── 7. Advertencia / Warning ── -->
+    <div class="card">
+      <div class="warning-box">
+        <p>⚠️ Este equipo ha sido certificado para su uso exclusivo en Chile conforme a la normativa vigente de la Subsecretaría de Telecomunicaciones (SUBTEL). La modificación no autorizada del equipo anulará la certificación.</p>
+        <p>This device has been certified for use exclusively in Chile in accordance with current SUBTEL regulations. Unauthorized modification of the device will void the certification.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p>Documento generado conforme a normativa SUBTEL · Generated in accordance with SUBTEL regulations</p>
+      <p>Última actualización / Last updated: DD/MM/AAAA &nbsp;·&nbsp; v1.0</p>
+    </div>
+  </footer>
+
+</body>
+</html>
